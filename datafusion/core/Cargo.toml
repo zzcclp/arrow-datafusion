@@ -134,7 +134,7 @@ zstd = { version = "0.13", optional = true, default-features = false }
 [dev-dependencies]
 # Temporary fix for https://github.com/apache/datafusion/issues/13686
 # TODO: Remove it once the upstream has a fix
-lexical-write-integer = { version = "=1.0.2" }
+lexical-write-integer = { version = "=1.0.5" }
 
 arrow-buffer = { workspace = true }
 async-trait = { workspace = true }
