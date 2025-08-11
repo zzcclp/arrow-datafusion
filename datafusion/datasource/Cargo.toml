@@ -58,7 +58,7 @@ datafusion-physical-plan = { workspace = true }
 datafusion-session = { workspace = true }
 flate2 = { version = "1.1.2", optional = true }
 futures = { workspace = true }
-glob = "0.3.0"
+glob = "0.3.3"
 itertools = { workspace = true }
 log = { workspace = true }
 object_store = { workspace = true }
