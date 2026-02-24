@@ -25,6 +25,7 @@ pub use crate::ordering::InputOrderMode;
 use crate::sort_pushdown::SortOrderPushdownResult;
 pub use crate::stream::EmptyRecordBatchStream;
 
+use arrow_schema::Schema;
 pub use datafusion_common::hash_utils;
 use datafusion_common::tree_node::{Transformed, TransformedResult, TreeNode};
 pub use datafusion_common::utils::project_schema;
@@ -38,7 +39,7 @@ pub use datafusion_physical_expr::{
 
 use std::any::Any;
 use std::fmt::Debug;
-use std::sync::Arc;
+use std::sync::{Arc, LazyLock};
 
 use crate::coalesce_partitions::CoalescePartitionsExec;
 use crate::display::DisplayableExecutionPlan;
@@ -1476,6 +1477,20 @@ pub enum CardinalityEffect {
     LowerEqual,
     /// The operator may produce more output rows than it receives input rows
     GreaterEqual,
+}
+
+/// Can be used in contexts where properties have not yet been initialized properly.
+pub(crate) fn stub_properties() -> Arc<PlanProperties> {
+    static STUB_PROPERTIES: LazyLock<Arc<PlanProperties>> = LazyLock::new(|| {
+        Arc::new(PlanProperties::new(
+            EquivalenceProperties::new(Arc::new(Schema::empty())),
+            Partitioning::UnknownPartitioning(1),
+            EmissionType::Final,
+            Boundedness::Bounded,
+        ))
+    });
+
+    Arc::clone(&STUB_PROPERTIES)
 }
 
 #[cfg(test)]
