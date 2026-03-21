@@ -1091,7 +1091,6 @@ mod tests {
     use crate::test;
     use crate::test::exec::StatisticsExec;
     use arrow::datatypes::{Field, Schema, UnionFields, UnionMode};
-    use datafusion_common::ScalarValue;
 
     #[tokio::test]
     async fn collect_columns_predicates() -> Result<()> {
